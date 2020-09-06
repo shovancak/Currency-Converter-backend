@@ -185,9 +185,11 @@ const getLatestCurrencyData = async (req, res, next) => {
   const latestData = DUMMY_DATA;
   //Error handling
   if (!latestData) {
-    return res.status(404).json({
-      errorMessage: "Something went wrong, colud not get latest currency data.",
-    });
+    const error = new Error(
+      "Something went wrong, colud not get latest currency data."
+    );
+    error.code = 404;
+    return next(error);
   }
   //Response => object with latest currency data
   res.status(200).json({ latestData: latestData });
@@ -201,9 +203,11 @@ const currencyConversion = (req, res, next) => {
   //Error handling in case of request body data validation failed
   if (!validationErrors.isEmpty()) {
     //Sending response with error message
-    return res
-      .status(422)
-      .json({ errorMessage: "Invalid data passed, please check your data." });
+    const error = new Error(
+      "Invalid data passed, please check your input data."
+    );
+    error.code = 422;
+    throw error;
   }
 
   //Extracting data from request body
@@ -213,10 +217,11 @@ const currencyConversion = (req, res, next) => {
   //Error handling in case of not working conversion
   if (!convertedAmount) {
     //Sending response with error message
-    return res.status(500).json({
-      errorMessage:
-        "Something went wrong, conversion does not work, please try again.",
-    });
+    const error = new Error(
+      "Something went wrong, conversion does not work, please try again."
+    );
+    error.code = 500;
+    throw error;
   }
   //Response => object with converted amount in destination currency
   res.status(200).json({ convertedAmount: convertedAmount });
