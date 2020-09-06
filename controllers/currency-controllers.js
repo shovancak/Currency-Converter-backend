@@ -1,6 +1,7 @@
 //Imports
 const latestCurrencyData = require("../util/latestCurrencyData");
 const conversion = require("../util/conversion");
+const { validationResult } = require("express-validator");
 
 //Dummy data
 const DUMMY_DATA = {
@@ -194,12 +195,24 @@ const getLatestCurrencyData = async (req, res, next) => {
 
 //Controller function for currency conversion
 const currencyConversion = (req, res, next) => {
+  //Using validationResult function from express-validator package for validating data in request
+  //vlaidationResult returns object of errors in case there are some validation erros based on validation criteria set in routes file
+  const validationErrors = validationResult(req);
+  //Error handling in case of request body data validation failed
+  if (!validationErrors.isEmpty()) {
+    //Sending response with error message
+    return res
+      .status(422)
+      .json({ errorMessage: "Invalid data passed, please check your data." });
+  }
+
   //Extracting data from request body
   const { amount, rate } = req.body;
   //Converting currencies
   const convertedAmount = conversion(amount, rate);
-  //Error handling
+  //Error handling in case of not working conversion
   if (!convertedAmount) {
+    //Sending response with error message
     return res.status(500).json({
       errorMessage:
         "Something went wrong, conversion does not work, please try again.",
