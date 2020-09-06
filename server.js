@@ -1,6 +1,7 @@
 //Imports
 const express = require("express");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 const currencyRoutes = require("./routes/currency-routes");
 
 //Setting port for server
@@ -33,6 +34,18 @@ app.use((error, req, res, next) => {
     .json(error.message || "An unknown error occurred.");
 });
 
-//Binding and listening for connections
-app.listen(PORT);
-console.log("Server running, port:", PORT);
+//Connection to mongoDB by mongoose
+mongoose
+  .connect(
+    //MongoDB connection string
+    `mongodb+srv://samuel:83461834Sh@cluster0-eamri.mongodb.net/CurrencyConverter?retryWrites=true&w=majority`,
+    { useNewUrlParser: true, useUnifiedTopology: true }
+  )
+  .then(() => {
+    //Binding and listening for connections
+    app.listen(PORT);
+    console.log("Server running, port:", PORT);
+  })
+  .catch((err) => {
+    console.log("Connection to database failed. Error message:", err);
+  });
