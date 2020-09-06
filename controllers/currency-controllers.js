@@ -1,5 +1,6 @@
 //Imports
 const latestCurrencyData = require("../util/latestCurrencyData");
+const conversion = require("../util/conversion");
 
 //Dummy data
 const DUMMY_DATA = {
@@ -178,17 +179,36 @@ const DUMMY_DATA = {
 
 //Controller function for getting latest currency data.
 const getLatestCurrencyData = async (req, res, next) => {
+  //Getting latest currency data from external API
   // const latestData = await latestCurrencyData();
   const latestData = DUMMY_DATA;
   //Error handling
   if (!latestData) {
     return res.status(404).json({
-      message: "Something went wrong, colud not get latest currency data.",
+      errorMessage: "Something went wrong, colud not get latest currency data.",
     });
   }
-  //Response
+  //Response => object with latest currency data
   res.status(200).json({ latestData: latestData });
+};
+
+//Controller function for currency conversion
+const currencyConversion = (req, res, next) => {
+  //Extracting data from request body
+  const { amount, rate } = req.body;
+  //Converting currencies
+  const convertedAmount = conversion(amount, rate);
+  //Error handling
+  if (!convertedAmount) {
+    return res.status(500).json({
+      errorMessage:
+        "Something went wrong, conversion does not work, please try again.",
+    });
+  }
+  //Response => object with converted amount in destination currency
+  res.status(200).json({ convertedAmount: convertedAmount });
 };
 
 //Exports
 exports.getLatestCurrencyData = getLatestCurrencyData;
+exports.currencyConversion = currencyConversion;
