@@ -3,6 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const currencyRoutes = require("./routes/currency-routes");
+const totalStatsRoutes = require("./routes/totalStats-routes");
 
 //Setting port for server
 const PORT = 5000;
@@ -15,6 +16,7 @@ app.use(bodyParser.json());
 
 //Middlewares for handling routes
 app.use("/api/currency", currencyRoutes);
+app.use("/api/total-stats", totalStatsRoutes);
 
 //Error handling middleware for unsupported routes
 app.use((req, res, next) => {
