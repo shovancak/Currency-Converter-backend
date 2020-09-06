@@ -15,6 +15,13 @@ app.use(bodyParser.json());
 //Middlewares for handling routes
 app.use("/api/currency", currencyRoutes);
 
+//Error handling middleware for unsupported routes
+app.use((req, res, next) => {
+  const error = new Error("Could not find this route.");
+  error.code = 404;
+  throw next(error);
+});
+
 //Default error handling middleware function applied on every incoming request
 //It is trigered only for requests where error was thrown
 app.use((error, req, res, next) => {
