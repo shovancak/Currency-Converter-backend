@@ -6,7 +6,7 @@ const totalStatsControllers = require("../controllers/totalStats-controller");
 const router = express.Router();
 
 //Routes
-router.put("/total-stats", totalStatsControllers.updateTotalStats);
+router.patch("/", totalStatsControllers.updateTotalStats);
 
 //Exports
 module.exports = router;
