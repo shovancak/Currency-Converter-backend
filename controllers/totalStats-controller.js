@@ -49,9 +49,31 @@ const updateTotalStats = async (req, res, next) => {
     return next(error);
   }
 
-  //Response => object with updated data
-  res.status(200).json({ totalStats: stats });
+  //Response => message
+  res.status(200).json({ message: "Total stats successfully updated." });
+};
+
+//Controller function for getting data about total USD converted and total conversions requests made.
+const getTotalStats = async (req, res, next) => {
+  //Variable for storing data from database
+  let stats;
+
+  //Getting data ftom database
+  try {
+    stats = await TotalStat.findOne();
+  } catch (err) {
+    //Error handling in case of no data found
+    const error = new Error(
+      "Something went wrong, could not get data from database."
+    );
+    error.code = 500;
+    return next(error);
+  }
+
+  //Response => object with total USD converted and total conversion made
+  res.status(200).json({ totalData: stats });
 };
 
 //Exports
 exports.updateTotalStats = updateTotalStats;
+exports.getTotalStats = getTotalStats;
