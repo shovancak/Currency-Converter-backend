@@ -10,7 +10,18 @@ const router = express.Router();
 router.get("/currency-data", currencyControllers.getLatestCurrencyData);
 router.post(
   "/conversion",
-  [check("amount").exists({ checkNull: true, checkFalsy: true }).isNumeric()], // => Validating if data in request body exists and are numeric
+  [
+    check("amount")
+      .exists({ checkNull: true, checkFalsy: true })
+      .isNumeric()
+      .not()
+      .isString(),
+    check("rate")
+      .exists({ checkNull: true, checkFalsy: true })
+      .isNumeric()
+      .not()
+      .isString(),
+  ], // => Validating if data in request body are numeric
   currencyControllers.currencyConversion
 );
 
