@@ -211,7 +211,8 @@ const currencyConversion = (req, res, next) => {
   }
 
   //Extracting data from request body
-  const { amount, rate } = req.body;
+  const { amount, rate, currency } = req.body;
+
   //Converting currencies
   const convertedAmount = conversion(amount, rate);
   //Error handling in case of not working conversion
@@ -224,7 +225,10 @@ const currencyConversion = (req, res, next) => {
     throw error;
   }
   //Response => object with converted amount in destination currency
-  res.status(200).json({ convertedAmount: convertedAmount });
+  res.status(200).json({
+    convertedAmount: convertedAmount,
+    convertedCurrency: currency,
+  });
 };
 
 //Exports
