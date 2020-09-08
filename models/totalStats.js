@@ -17,4 +17,4 @@ const totalStatsSchema = new Schema({
 });
 
 //Exporting and Creating model
-module.exports = mongoose.model("totalStat", totalStatsSchema);
+module.exports = mongoose.model("TotalStat", totalStatsSchema);
