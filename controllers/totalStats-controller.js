@@ -49,8 +49,8 @@ const updateTotalStats = async (req, res, next) => {
     return next(error);
   }
 
-  //Response => message
-  res.status(200).json({ message: "Total stats successfully updated." });
+  //Response =>
+  res.status(200).json({ totalStats: stats });
 };
 
 //Controller function for getting data about total USD converted and total conversions requests made.
