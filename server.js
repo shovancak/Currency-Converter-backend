@@ -40,7 +40,7 @@ app.use((error, req, res, next) => {
 mongoose
   .connect(
     //MongoDB connection string
-    `mongodb+srv://samuel:83461834Sh@cluster0-eamri.mongodb.net/CurrencyConverter?retryWrites=true&w=majority`,
+    `mongodb+srv://samuel:83461834Sh@cluster0-eamri.mongodb.net/currency?retryWrites=true&w=majority`,
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => {
