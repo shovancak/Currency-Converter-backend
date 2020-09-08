@@ -21,7 +21,8 @@ router.post(
       .isNumeric()
       .not()
       .isString(),
-  ], // => Validating if data in request body are numeric
+    check("currency").exists({ checkNull: true, checkFalsy: true }).isString(),
+  ], // => Validating data in request body. "amount", "rate" must be numeric, "currency" must be string
   currencyControllers.currencyConversion
 );
 
