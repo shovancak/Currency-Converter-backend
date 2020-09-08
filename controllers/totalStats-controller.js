@@ -1,8 +1,22 @@
 //Imports
 const TotalStat = require("../models/totalStats");
+const { validationResult } = require("express-validator");
 
 //Controller function for updating amount of total USD converted and amount of total conversion requests.
 const updateTotalStats = async (req, res, next) => {
+  //Using validationResult function from express-validator package for validating data in request
+  //vlaidationResult returns object of errors in case there are some validation erros based on validation criteria set in routes file
+  const validatioErrors = validationResult(req);
+  //Error handling in case of request body data validation failed
+  if (!validatioErrors.isEmpty()) {
+    //Sending response with error message
+    const error = new Error(
+      "Invalid data passed, please check your input data."
+    );
+    error.code = 422;
+    return next(error);
+  }
+
   //Extracting data from request body
   const { amount } = req.body;
 
