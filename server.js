@@ -14,6 +14,21 @@ const app = express();
 //Using body-parser for parsing body of incoming requests
 app.use(bodyParser.json());
 
+//CORS error handling middleware
+//Attaching headers to response
+app.use((req, res, next) => {
+  //Allowing any domain to send request
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  //Header property controlling which headers incoming requests may have to be handled
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  //Header property controlling what request methods can be handled
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH");
+  next();
+});
+
 //Middlewares for handling routes
 app.use("/api/currency", currencyRoutes);
 app.use("/api/total-stats", totalStatsRoutes);
