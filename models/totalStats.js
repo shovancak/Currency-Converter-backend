@@ -14,6 +14,18 @@ const totalStatsSchema = new Schema({
     type: Number,
     required: true,
   },
+  mostPopularCurrency: {
+    type: String,
+  },
+  conversionsOfCurrency: {
+    type: [
+      {
+        name: { type: String },
+        conversions: { type: Number },
+      },
+    ],
+    required: true,
+  },
 });
 
 //Exporting and Creating model
