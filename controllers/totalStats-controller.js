@@ -18,7 +18,7 @@ const updateTotalStats = async (req, res, next) => {
   }
 
   //Extracting data from request body
-  const { amount } = req.body;
+  const { amount, currency } = req.body;
 
   //Variable for storing data from database
   let stats;
@@ -38,6 +38,26 @@ const updateTotalStats = async (req, res, next) => {
   //Updating values
   stats.totalUsd = stats.totalUsd + amount; // => adding USD amount of current conversion to total amount of USD converted
   stats.totalConversions = stats.totalConversions + 1; // => incrementing total conversion by 1 every time conversion request is send
+  //Checking if currency of current conversion was used before, returing index of currency
+  //If currency is not in array, returned index values is -1
+  const indexExistingCurrency = stats.conversionsOfCurrency.findIndex(
+    (curr) => curr.name === currency
+  );
+  //If index is higher or equal to 0, it means that currency was used before
+  if (indexExistingCurrency >= 0) {
+    //Storing amount of current conversions of currency
+    const currentConversions =
+      stats.conversionsOfCurrency[indexExistingCurrency].conversions;
+    //Adding 1 to amount of current conversions of currency
+    const newConversions = currentConversions + 1;
+    //Setting new value of amount as number of conversions
+    stats.conversionsOfCurrency[
+      indexExistingCurrency
+    ].conversions = newConversions;
+  } else {
+    //=> if index is -1 (currency was not used before), adding new object to array of used currencies
+    stats.conversionsOfCurrency.push({ name: currency, conversions: 1 });
+  }
 
   //Saving updated values in database
   try {
