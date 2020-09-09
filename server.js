@@ -5,9 +5,6 @@ const mongoose = require("mongoose");
 const currencyRoutes = require("./routes/currency-routes");
 const totalStatsRoutes = require("./routes/totalStats-routes");
 
-//Setting port for server
-const PORT = 5000;
-
 //Creating Express application
 const app = express();
 
@@ -64,7 +61,7 @@ mongoose
   )
   .then(() => {
     //Binding and listening for connections
-    app.listen(PORT);
+    app.listen(process.env.PORT || 5000); // process.env.PORT => default environmental variable containing PORT for application provided by HEROKU
   })
   //Catching database connection errors
   .catch((err) => {
