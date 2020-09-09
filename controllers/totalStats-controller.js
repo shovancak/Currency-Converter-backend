@@ -70,7 +70,7 @@ const updateTotalStats = async (req, res, next) => {
   //If amount of conversion of first currency is equal to amount of conversions second currency
   // mostPopularCurrency is set to "", it means there is no ONE most popular currency
   if (sortedArray[0].conversions === sortedArray[1].conversions) {
-    stats.mostPopularCurrency = "";
+    stats.mostPopularCurrency = "-";
   } else {
     //=> Else most popular currency is set to first element in array (element with highest aount of conversions)
     const mostPopularCurrency = sortedArray[0].name;
