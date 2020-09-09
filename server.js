@@ -53,16 +53,18 @@ app.use((error, req, res, next) => {
 });
 
 //Connection to mongoDB by mongoose
+//process.env.DB_USER => environmental variable containing username of database creator/user
+//process.env.DB_PASSWORD => environmental variable containing password of database creator/user
+//process.env.DB_NAME => environmental variable for database name
 mongoose
   .connect(
     //MongoDB connection string
-    `mongodb+srv://samuel:83461834Sh@cluster0-eamri.mongodb.net/currency?retryWrites=true&w=majority`,
+    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0-eamri.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`,
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => {
     //Binding and listening for connections
     app.listen(PORT);
-    console.log("Server running, port:", PORT);
   })
   //Catching database connection errors
   .catch((err) => {

@@ -2,7 +2,7 @@
 const axios = require("axios");
 
 // APP_ID / API KEY used for accessing the Open Exchange Rates API
-const APP_ID = "6f322c73837e425b9894333e4bb4ffb9";
+const APP_ID = process.env.APP_ID; // process.env.APP_ID => environmental variable containing users APP_ID/API KEY
 
 // Function for getting latest currency data (name, rate) from external API
 const latestCurrencyData = async () => {
