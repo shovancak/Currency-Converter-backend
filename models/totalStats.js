@@ -5,6 +5,10 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 //Creating Schema - blueprint for document
+//totalUsd => accumulated amount of USD converted
+//totlConversions => accumulated amount of all conversion requests made
+//mostPopularCurrency => destination currency with highest amount of conversions
+//conversionsOfCurrency => array of objects => every objects stores name (shortcut) and amount of conversions made
 const totalStatsSchema = new Schema({
   totalUsd: {
     type: Number,

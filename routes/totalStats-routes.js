@@ -17,7 +17,7 @@ router.patch(
       .not()
       .isString(),
     check("currency").exists({ checkNull: true, checkFalsy: true }).isString(),
-  ], // => Validating request body data, "amount" is valid if exists and is numerc, "currency" is valid if exists and is string
+  ], // => Validating request body data, "amount" is valid if exists and is numeric, "currency" is valid if exists and is string
   totalStatsControllers.updateTotalStats
 );
 

@@ -46,6 +46,7 @@ app.use((error, req, res, next) => {
   if (res.headerSent) {
     return next(error);
   }
+  // Response => error code and message of throwen error or default values
   res
     .status(error.code || 500)
     .json(error.message || "An unknown error occurred.");
@@ -63,7 +64,7 @@ mongoose
     app.listen(PORT);
     console.log("Server running, port:", PORT);
   })
-  //Catching connection errors
+  //Catching database connection errors
   .catch((err) => {
     console.log("Connection to database failed. Error message:", err);
   });

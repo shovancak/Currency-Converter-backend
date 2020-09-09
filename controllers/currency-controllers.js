@@ -224,7 +224,7 @@ const currencyConversion = (req, res, next) => {
     error.code = 500;
     throw error;
   }
-  //Response => object with converted amount in destination currency
+  //Response => object with converted amount in destination currency and currency name
   res.status(200).json({
     convertedAmount: convertedAmount,
     convertedCurrency: currency,

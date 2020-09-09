@@ -87,7 +87,7 @@ const updateTotalStats = async (req, res, next) => {
     return next(error);
   }
 
-  //Response =>
+  //Response => object with updated values
   res.status(200).json({ totalStats: stats });
 };
 
@@ -108,7 +108,7 @@ const getTotalStats = async (req, res, next) => {
     return next(error);
   }
 
-  //Response => object with total USD converted and total conversion made
+  //Response => object with total stats
   res.status(200).json({ totalData: stats });
 };
 
